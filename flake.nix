@@ -18,7 +18,7 @@
         nixosConfigurations.t480 = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
-            ./hosts/t480/configuration.nix
+            ./hosts/t480
             disko.nixosModules.disko
           ];
         };
