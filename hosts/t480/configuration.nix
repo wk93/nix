@@ -3,6 +3,12 @@
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+
+  imports = [
+    ./hardware-configuration.nix
+    ./disko.nix
+  ];
+
   # Basic config
   networking.hostName = "t480";
   networking.networkmanager.enable = true;  

@@ -19,8 +19,6 @@
           system = "x86_64-linux";
           modules = [
             ./hosts/t480/configuration.nix
-            ./hosts/t480/hardware-configuration.nix
-            ./hosts/t480/disko.nix
             disko.nixosModules.disko
           ];
         };
