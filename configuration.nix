@@ -5,13 +5,6 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  imports =
-    [ 
-      "${builtins.fetchTarball "https://github.com/nix-community/disko/archive/master.tar.gz"}/module.nix"
-      ./hardware-configuration.nix
-      ./disko.nix
-    ];
-
   # Basic config
   networking.hostName = "t480";
   networking.networkmanager.enable = true;  
