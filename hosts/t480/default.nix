@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -11,6 +11,13 @@
     ./locale.nix
     ./user.nix
   ];
+
+  home-manager = {
+    extraSpecialArgs = { inherit inputs; };
+    users = {
+      "wojtek" = import ./home.nix;
+    };
+  };
 
   # List packages installed in system profile.
   environment.systemPackages = with pkgs; [
