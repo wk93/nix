@@ -9,7 +9,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, flake-utils, disko, ... }@inputs:
+  outputs = { self, nixpkgs, flake-utils, disko, home-manager, ... }@inputs:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs {
@@ -26,6 +26,16 @@
             disko.nixosModules.disko
             inputs.home-manager.nixosModules.default
           ];
+        };
+
+	homeConfigurations = {
+          "wojtek@t480" = home-manager.lib.homeManagerConfiguration {
+            pkgs = nixpkgs.legacyPackages.x86_64-linux;
+            extraSpecialArgs = {inherit inputs;};
+            modules = [
+              ./home.nix
+            ];
+          };
         };
       };
 }

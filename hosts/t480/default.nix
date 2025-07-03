@@ -12,13 +12,6 @@
     ./user.nix
   ];
 
-  home-manager = {
-    extraSpecialArgs = { inherit inputs; };
-    users = {
-      "wojtek" = import ./home.nix;
-    };
-  };
-
   # List packages installed in system profile.
   environment.systemPackages = with pkgs; [
     neovim
