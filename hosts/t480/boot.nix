@@ -4,9 +4,9 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Force load videocard driver for tty
-  boot.initrd.kernelModules = [ "i915" ];
+  boot.initrd.kernelModules = ["i915"];
 
   # Hibernation with LUKS
   boot.resumeDevice = "/dev/mapper/cryptroot";
-  boot.kernelParams = [ "resume=/dev/mapper/cryptroot" ];
+  boot.kernelParams = ["resume=/dev/mapper/cryptroot"];
 }

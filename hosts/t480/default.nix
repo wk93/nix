@@ -1,7 +1,11 @@
-{ config, lib, pkgs, inputs, ... }:
-
 {
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}: {
+  nix.settings.experimental-features = ["nix-command" "flakes"];
 
   imports = [
     ./hardware-configuration.nix
@@ -32,6 +36,5 @@
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
-  system.stateVersion = "24.11"; 
+  system.stateVersion = "24.11";
 }
-

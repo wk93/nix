@@ -1,6 +1,8 @@
-{ config, lib, ... }:
-
 {
+  config,
+  lib,
+  ...
+}: {
   disko.devices = {
     disk.main = {
       type = "disk";
@@ -25,31 +27,31 @@
               settings.allowDiscards = true;
               content = {
                 type = "btrfs";
-                extraArgs = [ "-f" ];
+                extraArgs = ["-f"];
                 subvolumes = {
                   "@root" = {
                     mountpoint = "/";
-                    mountOptions = [ "compress=zstd" "noatime" ];
+                    mountOptions = ["compress=zstd" "noatime"];
                   };
                   "@home" = {
                     mountpoint = "/home";
-                    mountOptions = [ "compress=zstd" "noatime" ];
+                    mountOptions = ["compress=zstd" "noatime"];
                   };
                   "@nix" = {
                     mountpoint = "/nix";
-                    mountOptions = [ "compress=zstd" "noatime" ];
+                    mountOptions = ["compress=zstd" "noatime"];
                   };
                   "@log" = {
                     mountpoint = "/var/log";
-                    mountOptions = [ "noatime" ];
+                    mountOptions = ["noatime"];
                   };
                   "@persist" = {
                     mountpoint = "/persist";
-                    mountOptions = [ "compress=zstd" "noatime" ];
+                    mountOptions = ["compress=zstd" "noatime"];
                   };
                   "@swap" = {
                     mountpoint = "/swap";
-                    mountOptions = [ "noatime" "nodatacow" ];
+                    mountOptions = ["noatime" "nodatacow"];
                   };
                 };
               };
@@ -60,4 +62,3 @@
     };
   };
 }
-
