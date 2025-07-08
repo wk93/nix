@@ -84,6 +84,7 @@
     enable = true;
     installVimSyntax = true;
     settings = {
+      theme = "Monokai Pro Octagon";
       font-size = 11;
     };
   };
