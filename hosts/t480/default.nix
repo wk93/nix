@@ -12,11 +12,13 @@
     ./disko.nix
     ./boot.nix
     ./network.nix
+    ./graphics.nix
     ./locale.nix
     ./user.nix
   ];
 
   security.polkit.enable = true;
+  services.dbus.enable = true;
 
   # List packages installed in system profile.
   environment.systemPackages = with pkgs; [

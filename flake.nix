@@ -29,6 +29,7 @@
     nixosConfigurations.t480 = nixpkgs.lib.nixosSystem {
       inherit system;
       modules = [
+        {nixpkgs.config.allowUnfree = true;}
         ./hosts/t480
         disko.nixosModules.disko
         home-manager.nixosModules.default
