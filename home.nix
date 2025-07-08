@@ -4,7 +4,9 @@
   inputs,
   system,
   ...
-}: {
+}: let
+  importGpgScript = ./scripts/import-gpg.sh;
+in {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "wojtek";
@@ -42,19 +44,19 @@
     # '')
   ];
 
-  # Home Manager is pretty good at managing dotfiles. The primary way to manage
-  # plain files is through 'home.file'.
-  home.file = {
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy.
-    # ".screenrc".source = dotfiles/screenrc;
+  home.file.".bin/import-gpg-from-1password.sh" = {
+    source = importGpgScript;
+    executable = true;
+  };
 
-    # # You can also set the file content immediately.
-    # ".gradle/gradle.properties".text = ''
-    #   org.gradle.console=verbose
-    #   org.gradle.daemon.idletimeout=3600000
-    # '';
+  programs.bash.enable = true;
+
+  programs.bash.shellAliases = {
+    gpg-import = ''
+      ITEM_ID="e4wxgjn4phyvfextcfx7eb5ywy" \
+      FINGERPRINT="984BED610B4D4D5554B00B5CE4ACD897C85DFDDE" \
+      bash ~/.bin/import-gpg-from-1password.sh
+    '';
   };
 
   # Home Manager can also manage your environment variables through
