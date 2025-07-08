@@ -6,6 +6,7 @@
   ...
 }: let
   importGpgScript = ./scripts/import-gpg.sh;
+  gpgFingerprint = "984BED610B4D4D5554B00B5CE4ACD897C85DFDDE";
 in {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -54,9 +55,28 @@ in {
   programs.bash.shellAliases = {
     gpg-import = ''
       ITEM_ID="e4wxgjn4phyvfextcfx7eb5ywy" \
-      FINGERPRINT="984BED610B4D4D5554B00B5CE4ACD897C85DFDDE" \
+      FINGERPRINT="${gpgFingerprint}" \
       bash ~/.bin/import-gpg-from-1password.sh
     '';
+  };
+
+  programs.git = {
+    enable = true;
+    userName = "Wojciech Kania";
+    userEmail = "wojtek@kania.sh";
+
+    signing = {
+      key = gpgFingerprint;
+      signByDefault = true;
+    };
+
+    extraConfig = {
+      init.defaultBranch = "master";
+      pull.rebase = true;
+      push.autoSetupRemote = true;
+      commit.gpgSign = true;
+      user.signingKey = gpgFingerprint;
+    };
   };
 
   # Home Manager can also manage your environment variables through
