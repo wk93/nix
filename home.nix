@@ -79,4 +79,49 @@
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+
+  programs.ghostty = {
+    enable = true;
+    installVimSyntax = true;
+    settings = {
+      font-size = 11;
+    };
+  };
+
+  programs.firefox.enable = true;
+  wayland.windowManager.sway = {
+    enable = true;
+    xwayland = true;
+    config = {
+      modifier = "Mod4";
+      keybindings = let
+        cfg = config.wayland.windowManager.sway.config;
+        modifier = cfg.modifier;
+
+        switchWorkspaces = builtins.listToAttrs (builtins.genList (
+            i: {
+              name = "${modifier}+${toString (i + 1)}";
+              value = "workspace number ${toString (i + 1)}";
+            }
+          )
+          9);
+
+        moveWorkspaces = builtins.listToAttrs (builtins.genList (
+            i: {
+              name = "${modifier}+Shift+${toString (i + 1)}";
+              value = "move container to workspace number ${toString (i + 1)}; workspace number ${toString (i + 1)}";
+            }
+          )
+          9);
+      in
+        switchWorkspaces
+        // moveWorkspaces
+        // {
+          "${modifier}+Space" = "exec ${cfg.menu}";
+          "${modifier}+Return" = "exec ghostty";
+          "${modifier}+Shift+e" = "swaymsg exit";
+          "${modifier}+B" = "exec firefox";
+        };
+    };
+  };
 }

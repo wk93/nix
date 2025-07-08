@@ -16,6 +16,8 @@
     ./user.nix
   ];
 
+  security.polkit.enable = true;
+
   # List packages installed in system profile.
   environment.systemPackages = with pkgs; [
     neovim
