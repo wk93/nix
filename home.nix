@@ -3,6 +3,7 @@
   pkgs,
   inputs,
   system,
+  lib,
   ...
 }: let
   importGpgScript = ./scripts/import-gpg.sh;
@@ -50,6 +51,26 @@ in {
               op://Private/Github Auth key/private key?ssh-format=openssh:::git_auth" \
         bash ~/.bin/import-ssh-from-1password.sh
       '';
+    };
+  };
+
+  programs.starship = {
+    enable = true;
+    enableZshIntegration = true;
+    settings = {
+      add_newline = true;
+
+      format = lib.concatStrings [
+        "$directory"
+        "$git_branch"
+        "$git_status"
+        "$character"
+      ];
+
+      character = {
+        success_symbol = "[➜](bold green)";
+        error_symbol = "[➜](bold red)";
+      };
     };
   };
 
