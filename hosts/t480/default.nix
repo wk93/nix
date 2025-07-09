@@ -14,6 +14,7 @@
     ./network.nix
     ./graphics.nix
     ./locale.nix
+    ./shell.nix
     ./user.nix
   ];
 
