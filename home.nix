@@ -39,6 +39,12 @@ in {
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
 
+    initContent = ''
+      if [ -z "$TMUX" ] && [ -n "$DISPLAY" ] && [ "$TERM_PROGRAM" != "vscode" ]; then
+        tmux attach-session -t default || tmux new-session -s default
+      fi
+    '';
+
     shellAliases = {
       gpg-import = ''
         ITEM_ID="e4wxgjn4phyvfextcfx7eb5ywy" \
@@ -71,6 +77,48 @@ in {
         success_symbol = "[➜](bold green)";
         error_symbol = "[➜](bold red)";
       };
+    };
+  };
+
+  programs.tmux = {
+    enable = true;
+    prefix = "C-a";
+    clock24 = true;
+    mouse = false;
+    terminal = "screen-256color";
+    plugins = with pkgs.tmuxPlugins; [
+      sensible
+      {
+        plugin = resurrect;
+        extraConfig = ''
+          set -g @resurrect-dir '~/.config/tmux/resurrect'
+          set -g @resurrect-processes 'zsh bash nvim htop'
+          set -g @resurrect-strategy-nvim 'session'
+        '';
+      }
+      {
+        plugin = continuum;
+        extraConfig = ''
+          set -g @continuum-restore 'on'
+          set -g @continuum-save-interval '1'  # w minutach
+        '';
+      }
+    ];
+  };
+
+  systemd.user.services.tmux-autostart = {
+    Unit = {
+      Description = "Start tmux server on login";
+      After = ["graphical-session.target"];
+    };
+
+    Service = {
+      ExecStart = "${pkgs.tmux}/bin/tmux start-server";
+      Restart = "on-failure";
+    };
+
+    Install = {
+      WantedBy = ["default.target"];
     };
   };
 
