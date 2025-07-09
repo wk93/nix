@@ -14,6 +14,7 @@ in {
 
   home.packages = with pkgs; [
     wl-clipboard
+    git-crypt
     inputs.vim.packages.${system}.default
   ];
 
