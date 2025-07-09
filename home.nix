@@ -9,6 +9,9 @@
   importSshScript = ./scripts/import-ssh.sh;
   gpgFingerprint = "984BED610B4D4D5554B00B5CE4ACD897C85DFDDE";
 in {
+  imports = [
+    ./fonts.nix
+  ];
   home.username = "wojtek";
   home.homeDirectory = "/home/wojtek";
 
@@ -116,6 +119,10 @@ in {
     installVimSyntax = true;
     settings = {
       theme = "Monokai Pro Octagon";
+      font-family = "TX-02 SemiCondensed";
+      font-family-bold = "TX-02 Bold SemiCondensed";
+      font-family-italic = "TX-02 Condensed SemiOblique";
+      font-family-bold-italic = "TX-02 Bold SemiCondensed Oblique";
       font-size = 11;
     };
   };
