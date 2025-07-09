@@ -72,6 +72,8 @@ in {
     '';
   };
 
+  programs.lazygit.enable = true;
+
   programs.git = {
     enable = true;
     userName = "Wojciech Kania";
