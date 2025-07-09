@@ -56,20 +56,26 @@ in {
     executable = true;
   };
 
-  programs.bash.enable = true;
+  programs.zsh = {
+    enable = true;
 
-  programs.bash.shellAliases = {
-    gpg-import = ''
-      ITEM_ID="e4wxgjn4phyvfextcfx7eb5ywy" \
-      FINGERPRINT="${gpgFingerprint}" \
-      bash ~/.bin/import-gpg-from-1password.sh
-    '';
-    ssh-import = ''
-      SSH_DIR="$HOME/.ssh/keys" \
-      KEYS="op://Private/GitHub Sign key/private key?ssh-format=openssh:::git_sign
-            op://Private/Github Auth key/private key?ssh-format=openssh:::git_auth" \
-      bash ~/.bin/import-ssh-from-1password.sh
-    '';
+    enableCompletion = true;
+    autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
+
+    shellAliases = {
+      gpg-import = ''
+        ITEM_ID="e4wxgjn4phyvfextcfx7eb5ywy" \
+        FINGERPRINT="${gpgFingerprint}" \
+        bash ~/.bin/import-gpg-from-1password.sh
+      '';
+      ssh-import = ''
+        SSH_DIR="$HOME/.ssh/keys" \
+        KEYS="op://Private/GitHub Sign key/private key?ssh-format=openssh:::git_sign
+              op://Private/Github Auth key/private key?ssh-format=openssh:::git_auth" \
+        bash ~/.bin/import-ssh-from-1password.sh
+      '';
+    };
   };
 
   programs.lazygit.enable = true;
