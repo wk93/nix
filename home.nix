@@ -125,6 +125,11 @@ in {
     xwayland = true;
     config = {
       modifier = "Mod4";
+      input = {
+        "*" = {
+          xkb_layout = "pl";
+        };
+      };
       keybindings = let
         cfg = config.wayland.windowManager.sway.config;
         modifier = cfg.modifier;
