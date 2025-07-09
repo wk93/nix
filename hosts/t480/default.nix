@@ -32,7 +32,7 @@
   # started in user sessions.
   programs.gnupg.agent = {
     enable = true;
-    enableSSHSupport = true;
+    enableSSHSupport = false;
   };
 
   # List services that you want to enable:
