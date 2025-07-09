@@ -93,6 +93,24 @@ in {
     };
   };
 
+  services.ssh-agent.enable = true;
+  programs.ssh = {
+    enable = true;
+
+    addKeysToAgent = "yes";
+    hashKnownHosts = true;
+    compression = true;
+    serverAliveInterval = 60;
+
+    matchBlocks = {
+      "github.com" = {
+        user = "git";
+        identityFile = "~/.ssh/keys/git_auth";
+        identitiesOnly = true;
+      };
+    };
+  };
+
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. These will be explicitly sourced when using a
   # shell provided by Home Manager. If you don't want to manage your shell
