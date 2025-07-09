@@ -78,16 +78,18 @@ in {
     userEmail = "wojtek@kania.sh";
 
     signing = {
-      key = gpgFingerprint;
+      key = "~/.ssh/keys/git_sign.pub";
       signByDefault = true;
     };
 
     extraConfig = {
+      gpg.format = "ssh";
+      commit.gpgSign = true;
+      user.signingKey = "~/.ssh/keys/git_sign.pub";
+
       init.defaultBranch = "master";
       pull.rebase = true;
       push.autoSetupRemote = true;
-      commit.gpgSign = true;
-      user.signingKey = gpgFingerprint;
     };
   };
 
