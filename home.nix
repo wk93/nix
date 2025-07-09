@@ -158,6 +158,7 @@ in {
           "${modifier}+Return" = "exec ghostty";
           "${modifier}+Shift+e" = "swaymsg exit";
           "${modifier}+B" = "exec firefox";
+          "${modifier}+Q" = "kill";
         };
     };
   };
