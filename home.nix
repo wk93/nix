@@ -128,6 +128,7 @@ in {
       input = {
         "*" = {
           xkb_layout = "pl";
+          xkb_options = "caps:escape";
         };
       };
       keybindings = let
