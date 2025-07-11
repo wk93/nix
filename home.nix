@@ -20,6 +20,8 @@ in {
     wl-clipboard
     git-crypt
     inputs.vim.packages.${system}.default
+    _1password-cli
+    _1password-gui
   ];
 
   home.file.".bin/import-gpg-from-1password.sh" = {
