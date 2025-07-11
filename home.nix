@@ -192,8 +192,39 @@ in {
       font-family-bold = "TX-02 Bold SemiCondensed";
       font-family-italic = "TX-02 Condensed SemiOblique";
       font-family-bold-italic = "TX-02 Bold SemiCondensed Oblique";
-      font-size = 11;
+      font-size = 15;
     };
+  };
+
+  services.kanshi = {
+    enable = true;
+    settings = [
+      {
+        profile.name = "undocked";
+        profile.outputs = [
+          {
+            criteria = "eDP-1";
+            scale = 1.5;
+          }
+        ];
+      }
+      {
+        profile.name = "docked";
+        profile.outputs = [
+          {
+            criteria = "eDP-1";
+            scale = 1.5;
+            position = "0,1440";
+          }
+          {
+            criteria = "Dell Inc. DELL P2715Q V7WP95B5595S";
+            scale = 1.5;
+            position = "0,0";
+          }
+        ];
+        profile.exec = "${pkgs.sway}/bin/swaymsg workspace 1, move workspace to output eDP-1";
+      }
+    ];
   };
 
   programs.firefox.enable = true;
