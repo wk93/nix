@@ -182,7 +182,8 @@ in {
   #  /etc/profiles/per-user/wojtek/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    # EDITOR = "emacs";
+    NIXOS_OZONE_WL = "1";
+    ELECTRON_OZONE_PLATFORM_HINT = "wayland";
   };
 
   programs.ghostty = {
