@@ -252,7 +252,7 @@ in {
 
       DNSOverHTTPS = {
         Enabled = true;
-        ProviderURL = "https://base.mullvad.net/dns-query";
+        ProviderURL = "https://base.dns.mullvad.net/dns-query";
       };
 
       EnableTrackingProtection = {
@@ -302,7 +302,7 @@ in {
       "default" = {
         extraConfig = ''
           user_pref("network.trr.mode", 3);
-          user_pref("network.trr.uri", "https://base.mullvad.net/dns-query");
+          user_pref("network.trr.uri", "https://base.dns.mullvad.net/dns-query");
           user_pref("network.trr.bootstrapAddress", "194.242.2.4");
         '';
       };
