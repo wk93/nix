@@ -230,7 +230,69 @@ in {
     ];
   };
 
-  programs.firefox.enable = true;
+  programs.firefox = {
+    enable = true;
+    policies = {
+      BlockAboutConfig = true;
+      DisableTelemetry = true;
+      DisableFirefoxStudies = true;
+      DisablePocket = true;
+      DisableFirefoxAccounts = true;
+      DisableFeedbackCommands = true;
+      DisableFormHistory = true;
+      DisablePasswordReveal = true;
+      DisableProfileImport = true;
+      DisableSystemAddonUpdate = true;
+      DisableEncryptedClientHello = true;
+      DisableFirefoxScreenshots = true;
+      DisableMasterPasswordCreation = true;
+      DisableAppUpdate = true;
+
+      HttpsOnlyMode = true;
+
+      DNSOverHTTPS = {
+        Enabled = true;
+        ProviderURL = "https://base.mullvad.net/dns-query";
+      };
+
+      EnableTrackingProtection = {
+        Value = "always";
+        Locked = true;
+        Cryptomining = true;
+        Fingerprinting = true;
+      };
+
+      SearchSuggestEnabled = false;
+      SearchEngines.PreventInstalls = true;
+      OfferToSaveLogins = false;
+      PasswordManagerEnabled = false;
+
+      EncryptedMediaExtensions = {
+        Enabled = false;
+      };
+
+      FirefoxHome = {
+        Search = false;
+        TopSites = false;
+        SponsoredTopSites = false;
+        Highlights = false;
+        Pocket = false;
+        SponsoredPocket = false;
+        Snippets = false;
+        Locked = true;
+      };
+    };
+    profiles = {
+      "default" = {
+        extraConfig = ''
+          user_pref("network.trr.mode", 3);
+          user_pref("network.trr.uri", "https://base.mullvad.net/dns-query");
+          user_pref("network.trr.bootstrapAddress", "194.242.2.4");
+        '';
+      };
+    };
+  };
+
   wayland.windowManager.sway = {
     enable = true;
     xwayland = true;
