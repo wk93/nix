@@ -13,6 +13,7 @@
     ./boot.nix
     ./network.nix
     ./graphics.nix
+    ./sound.nix
     ./locale.nix
     ./shell.nix
     ./user.nix
