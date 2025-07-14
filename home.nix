@@ -372,6 +372,14 @@ in {
           "${modifier}+B" = "exec firefox";
           "${modifier}+P" = "exec 1password";
           "${modifier}+Q" = "kill";
+
+          #T480 functional keys
+          "XF86AudioMute" = "exec pactl set-sink-mute @DEFAULT_SINK@ toggle";
+          "XF86AudioLowerVolume" = "exec pactl set-sink-volume @DEFAULT_SINK@ -10%";
+          "XF86AudioRaiseVolume" = "exec pactl set-sink-volume @DEFAULT_SINK@ +10%";
+          "XF86AudioMicMute" = "exec pactl set-source-mute @DEFAULT_SOURCE@ toggle";
+          "XF86MonBrightnessDown" = "exec brightnessctl -q set 10%-";
+          "XF86MonBrightnessUp" = "exec brightnessctl -q set +10%";
         };
     };
   };
