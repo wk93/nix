@@ -21,7 +21,7 @@ in {
     git-crypt
     inputs.vim.packages.${system}.default
     _1password-cli
-    _1password-gui
+    _1password-gui-beta
   ];
 
   home.file.".bin/import-gpg-from-1password.sh" = {
@@ -370,6 +370,7 @@ in {
           "${modifier}+Return" = "exec ghostty";
           "${modifier}+Shift+e" = "swaymsg exit";
           "${modifier}+B" = "exec firefox";
+          "${modifier}+P" = "exec 1password";
           "${modifier}+Q" = "kill";
         };
     };
