@@ -16,6 +16,7 @@
     ./sound.nix
     ./locale.nix
     ./shell.nix
+    ./greetd.nix
     ./user.nix
   ];
 
