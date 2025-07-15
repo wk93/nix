@@ -193,7 +193,7 @@ in {
     enable = true;
     installVimSyntax = true;
     settings = {
-      theme = "Monokai Pro Octagon";
+      theme = "rose-pine";
       font-family = "TX-02 SemiCondensed";
       font-family-bold = "TX-02 Bold SemiCondensed";
       font-family-italic = "TX-02 Condensed SemiOblique";
