@@ -108,6 +108,12 @@ in {
           set -g @continuum-save-interval '1'  # w minutach
         '';
       }
+      {
+        plugin = rose-pine;
+        extraConfig = ''
+          set -g @rose_pine_variant 'main'
+        '';
+      }
     ];
   };
 
