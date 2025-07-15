@@ -22,6 +22,8 @@ in {
     inputs.vim.packages.${system}.default
     _1password-cli
     _1password-gui-beta
+    unzip
+    zip
   ];
 
   home.file.".bin/import-gpg-from-1password.sh" = {
