@@ -339,6 +339,10 @@ in {
     xwayland = true;
     config = {
       modifier = "Mod4";
+      window = {
+        titlebar = false;
+        border = 0;
+      };
       input = {
         "*" = {
           xkb_layout = "pl";
