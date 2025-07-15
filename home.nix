@@ -22,6 +22,7 @@ in {
     inputs.vim.packages.${system}.default
     _1password-cli
     _1password-gui-beta
+    spotify
     unzip
     zip
   ];
