@@ -357,6 +357,9 @@ in {
     profiles = {
       "default" = {
         extraConfig = ''
+          user_pref("browser.startup.page", 3);
+          user_pref("browser.startup.couldRestoreSession.count", 0);
+
           user_pref("network.trr.mode", 3);
           user_pref("network.trr.uri", "https://base.dns.mullvad.net/dns-query");
           user_pref("network.trr.bootstrapAddress", "194.242.2.4");
