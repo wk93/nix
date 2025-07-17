@@ -212,29 +212,43 @@ in {
     enable = true;
     settings = [
       {
-        profile.name = "undocked";
-        profile.outputs = [
-          {
-            criteria = "eDP-1";
-            scale = 1.5;
-          }
-        ];
+        profile = {
+          name = "undocked";
+          outputs = [
+            {
+              criteria = "eDP-1";
+              scale = 1.5;
+            }
+          ];
+          exec = [
+            ''${pkgs.sway}/bin/swaymsg "workspace 1, move workspace to output eDP-1"''
+            ''${pkgs.sway}/bin/swaymsg "workspace 2, move workspace to output eDP-1"''
+            ''${pkgs.sway}/bin/swaymsg "workspace 1"''
+          ];
+        };
       }
+
       {
-        profile.name = "docked";
-        profile.outputs = [
-          {
-            criteria = "eDP-1";
-            scale = 1.5;
-            position = "0,1440";
-          }
-          {
-            criteria = "Dell Inc. DELL P2715Q V7WP95B5595S";
-            scale = 1.5;
-            position = "0,0";
-          }
-        ];
-        profile.exec = "${pkgs.sway}/bin/swaymsg workspace 1, move workspace to output eDP-1";
+        profile = {
+          name = "docked";
+          outputs = [
+            {
+              criteria = "eDP-1";
+              scale = 1.5;
+              position = "0,1440";
+            }
+            {
+              criteria = "Dell Inc. DELL P2715Q V7WP95B5595S";
+              scale = 1.5;
+              position = "0,0";
+            }
+          ];
+          exec = [
+            ''${pkgs.sway}/bin/swaymsg "workspace 1, move workspace to output eDP-1"''
+            ''${pkgs.sway}/bin/swaymsg "workspace 2, move workspace to output DP-2"''
+            ''${pkgs.sway}/bin/swaymsg "workspace 1"''
+          ];
+        };
       }
     ];
   };
