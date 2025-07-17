@@ -388,6 +388,14 @@ in {
           xkb_options = "caps:escape";
         };
       };
+      assigns = {
+        "workspace 1" = [
+          {app_id = "ghostty";}
+        ];
+        "workspace 2" = [
+          {app_id = "firefox";}
+        ];
+      };
       keybindings = let
         cfg = config.wayland.windowManager.sway.config;
         modifier = cfg.modifier;
