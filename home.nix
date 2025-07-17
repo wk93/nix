@@ -363,6 +363,11 @@ in {
           user_pref("network.trr.mode", 3);
           user_pref("network.trr.uri", "https://base.dns.mullvad.net/dns-query");
           user_pref("network.trr.bootstrapAddress", "194.242.2.4");
+
+          user_pref("browser.translations.automaticallyPopup", false);
+          user_pref("browser.translations.enable", false);
+          user_pref("browser.translations.panelShown", true);
+          user_pref("browser.translations.neverTranslateLanguages", "pl");
         '';
       };
     };
