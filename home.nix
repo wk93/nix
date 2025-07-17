@@ -44,12 +44,6 @@ in {
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
 
-    initContent = ''
-      if [ -z "$TMUX" ] && [ -n "$DISPLAY" ] && [ "$TERM_PROGRAM" != "vscode" ]; then
-        tmux attach-session -t default || tmux new-session -s default
-      fi
-    '';
-
     shellAliases = {
       gpg-import = ''
         ITEM_ID="e4wxgjn4phyvfextcfx7eb5ywy" \
@@ -124,7 +118,7 @@ in {
     };
 
     Service = {
-      ExecStart = "${pkgs.tmux}/bin/tmux start-server";
+      ExecStart = "${pkgs.tmux}/bin/tmux new-session -d -s default";
       Restart = "on-failure";
     };
 
@@ -396,6 +390,16 @@ in {
           {app_id = "firefox";}
         ];
       };
+      startup = [
+        {
+          command = "ghostty -e tmux attach-session -t default || tmux new-session -s default";
+          always = true;
+        }
+        {
+          command = "firefox";
+          always = true;
+        }
+      ];
       keybindings = let
         cfg = config.wayland.windowManager.sway.config;
         modifier = cfg.modifier;
