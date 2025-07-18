@@ -382,6 +382,7 @@ in {
         "*" = {
           xkb_layout = "pl";
           xkb_options = "caps:escape";
+          natural_scroll = "enabled";
         };
       };
       assigns = {
