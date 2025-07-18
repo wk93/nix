@@ -25,6 +25,8 @@ in {
     spotify
     unzip
     zip
+    nodejs_22
+    bun
   ];
 
   home.file.".bin/import-gpg-from-1password.sh" = {
@@ -340,9 +342,9 @@ in {
           private_browsing = true;
         };
 
-        # Firefox Color
-        "firefoxcolor@mozilla.com" = {
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/firefox-color/latest.xpi";
+        # Rose pine theme
+        "{8343418e-9fca-401b-99fb-f28d0174fe55}" = {
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/my-rose-pine/latest.xpi";
           installation_mode = "force_installed";
           private_browsing = true;
         };
