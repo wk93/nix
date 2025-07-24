@@ -3,7 +3,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     disko.url = "github:nix-community/disko";
     flake-utils.url = "github:numtide/flake-utils";
-    vim.url = "github:wk93/vim";
+    vim.url = "github:wk93/nvim";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
