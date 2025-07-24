@@ -5,11 +5,13 @@
   system,
   lib,
   ...
-}: let
+}:
+let
   importGpgScript = ./scripts/import-gpg.sh;
   importSshScript = ./scripts/import-ssh.sh;
   gpgFingerprint = "984BED610B4D4D5554B00B5CE4ACD897C85DFDDE";
-in {
+in
+{
   imports = [
     ./fonts.nix
   ];
@@ -119,7 +121,7 @@ in {
   systemd.user.services.tmux-autostart = {
     Unit = {
       Description = "Start tmux server on login";
-      After = ["graphical-session.target"];
+      After = [ "graphical-session.target" ];
     };
 
     Service = {
@@ -128,7 +130,7 @@ in {
     };
 
     Install = {
-      WantedBy = ["default.target"];
+      WantedBy = [ "default.target" ];
     };
   };
 
@@ -312,7 +314,13 @@ in {
           }
         ];
         Default = "Mullvad Leta";
-        Remove = ["Bing" "DuckDuckGo" "eBay" "Wikipedia (en)" "Google"];
+        Remove = [
+          "Bing"
+          "DuckDuckGo"
+          "eBay"
+          "Wikipedia (en)"
+          "Google"
+        ];
       };
 
       FirefoxHome = {
@@ -396,10 +404,10 @@ in {
       };
       assigns = {
         "workspace 1" = [
-          {app_id = "ghostty";}
+          { app_id = "ghostty"; }
         ];
         "workspace 2" = [
-          {app_id = "firefox";}
+          { app_id = "firefox"; }
         ];
       };
       startup = [
@@ -412,26 +420,25 @@ in {
           always = true;
         }
       ];
-      keybindings = let
-        cfg = config.wayland.windowManager.sway.config;
-        modifier = cfg.modifier;
+      keybindings =
+        let
+          cfg = config.wayland.windowManager.sway.config;
+          modifier = cfg.modifier;
 
-        switchWorkspaces = builtins.listToAttrs (builtins.genList (
-            i: {
+          switchWorkspaces = builtins.listToAttrs (
+            builtins.genList (i: {
               name = "${modifier}+${toString (i + 1)}";
               value = "workspace number ${toString (i + 1)}";
-            }
-          )
-          9);
+            }) 9
+          );
 
-        moveWorkspaces = builtins.listToAttrs (builtins.genList (
-            i: {
+          moveWorkspaces = builtins.listToAttrs (
+            builtins.genList (i: {
               name = "${modifier}+Shift+${toString (i + 1)}";
               value = "move container to workspace number ${toString (i + 1)}; workspace number ${toString (i + 1)}";
-            }
-          )
-          9);
-      in
+            }) 9
+          );
+        in
         switchWorkspaces
         // moveWorkspaces
         // {
