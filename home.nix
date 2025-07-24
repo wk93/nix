@@ -253,6 +253,11 @@ in {
     ];
   };
 
+  programs.thunderbird = {
+    enable = true;
+    profiles = { };
+  };
+
   programs.firefox = {
     enable = true;
     policies = {
