@@ -23,6 +23,7 @@ in {
     _1password-cli
     _1password-gui-beta
     spotify
+    gimp
     unzip
     zip
     nodejs_22
