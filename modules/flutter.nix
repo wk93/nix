@@ -12,7 +12,11 @@
   android-comp = androidenv.composeAndroidPackages {
     buildToolsVersions = ["34.0.0"];
     toolsVersion = "26.1.1";
-    platformVersions = ["29" "30" "31" "33" "34"];
+    platformVersions = ["29" "30" "31" "33" "34" "35"];
+    includeNDK = true;
+    ndkVersions = ["26.3.11579264"];
+    includeCmake = true;
+    cmakeVersions = ["latest" "3.22.1"];
     extraLicenses = [
       "android-googletv-license"
       "android-sdk-arm-dbt-license"
@@ -44,5 +48,6 @@ in {
     CHROME_EXECUTABLE = "${pkgs.google-chrome}/bin/google-chrome-stable";
     FLUTTER_SDK_ROOT = "${pkgs.flutter}";
     JAVA_HOME = "${pkgs.jdk17}";
+    GRADLE_OPTS = "-Dorg.gradle.project.android.aapt2FromMavenOverride=${android-sdk}/libexec/android-sdk/build-tools/34.0.0/aapt2";
   };
 }
