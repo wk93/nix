@@ -30,6 +30,7 @@ in
     zip
     nodejs_22
     bun
+    grim
   ];
 
   home.file.".bin/import-gpg-from-1password.sh" = {
@@ -446,6 +447,10 @@ in
           "${modifier}+B" = "exec firefox";
           "${modifier}+P" = "exec 1password";
           "${modifier}+Q" = "kill";
+
+          # Screenshots
+          "${modifier}+Shift+P" = ''exec grim ~/Pictures/screenshot-$(date +%Y%m%d-%H%M%S).png'';
+          "${modifier}+Shift+Control+P" = ''exec grim -g "$(slurp)" - | wl-copy'';
 
           #T480 functional keys
           "XF86AudioMute" = "exec pactl set-sink-mute @DEFAULT_SINK@ toggle";
