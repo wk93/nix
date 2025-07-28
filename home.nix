@@ -30,8 +30,6 @@ in
     zip
     nodejs_22
     bun
-    fd
-    ripgrep
   ];
 
   home.file.".bin/import-gpg-from-1password.sh" = {
