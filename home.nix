@@ -32,6 +32,7 @@ in {
     bun
     grim
     gimp
+    gcc.cc.lib
   ];
 
   home.file.".bin/import-gpg-from-1password.sh" = {
