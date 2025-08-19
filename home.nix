@@ -33,6 +33,7 @@ in {
     grim
     gimp
     gcc.cc.lib
+    mongodb-compass
   ];
 
   home.file.".bin/import-gpg-from-1password.sh" = {
