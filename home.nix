@@ -24,6 +24,7 @@ in {
     _1password-cli
     _1password-gui-beta
     spotify
+    telegram-desktop
     gimp
     unzip
     zip
