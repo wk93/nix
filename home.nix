@@ -34,6 +34,12 @@ in {
     gimp
     gcc.cc.lib
     mongodb-compass
+    cargo
+    rustc
+    rustfmt
+    openssl
+    pkg-config
+    rustc
   ];
 
   home.file.".bin/import-gpg-from-1password.sh" = {
