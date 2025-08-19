@@ -31,6 +31,7 @@ in {
     nodejs_22
     bun
     grim
+    gimp
   ];
 
   home.file.".bin/import-gpg-from-1password.sh" = {
