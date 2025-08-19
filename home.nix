@@ -457,12 +457,12 @@ in {
         switchWorkspaces
         // moveWorkspaces
         // {
-          "${modifier}+Space" = "exec ${cfg.menu}";
           "${modifier}+Return" = "exec ghostty";
           "${modifier}+Shift+e" = "swaymsg exit";
           "${modifier}+B" = "exec firefox";
           "${modifier}+P" = "exec 1password";
           "${modifier}+Q" = "kill";
+          "${modifier}+Space" = "exec rofi -show drun";
 
           # Screenshots
           "${modifier}+Shift+P" = ''exec grim ~/Pictures/screenshot-$(date +%Y%m%d-%H%M%S).png'';
@@ -479,6 +479,15 @@ in {
     };
   };
 
+  programs.rofi = {
+    enable = true;
+    package = pkgs.rofi-wayland; # ważne na Waylandzie
+    theme = "gruvbox"; # lub ścieżka do .rasi
+    extraConfig = {
+      modi = "drun,run,window,ssh";
+      show-icons = true;
+    };
+  };
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
