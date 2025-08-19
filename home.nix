@@ -68,7 +68,8 @@ in {
       ssh-import = ''
         SSH_DIR="$HOME/.ssh/keys" \
         KEYS="op://Private/GitHub Sign key/private key?ssh-format=openssh:::git_sign
-              op://Private/Github Auth key/private key?ssh-format=openssh:::git_auth" \
+              op://Private/Github Auth key/private key?ssh-format=openssh:::git_auth
+              op://Private/Oracle key/private key?ssh-format=openssh:::oracle" \
         bash ~/.bin/import-ssh-from-1password.sh
       '';
     };
@@ -178,6 +179,11 @@ in {
       "github.com" = {
         user = "git";
         identityFile = "~/.ssh/keys/git_auth";
+        identitiesOnly = true;
+      };
+      "89.168.111.137" = {
+        user = "wojtek";
+        identityFile = "~/.ssh/keys/oracle";
         identitiesOnly = true;
       };
     };
