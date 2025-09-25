@@ -55,7 +55,20 @@ in {
     rustfmt
     openssl
     pkg-config
+    gcc
     rustc
+    vips # for sharp
+    # start for node canvas
+    cairo
+    pango
+    libpng
+    libjpeg_turbo
+    giflib
+    pixman
+    # stop for node canvas
+
+    postman
+    libreoffice
   ];
 
   home.file.".bin/import-gpg-from-1password.sh" = {
@@ -109,6 +122,28 @@ in {
         error_symbol = "[➜](bold red)";
       };
     };
+  };
+
+  xdg.desktopEntries = {
+    spotify = {
+      name = "Spotify";
+      genericName = "Music Player";
+      comment = "Stream music using Spotify";
+      exec = "spotify --enable-features=UseOzonePlatform --ozone-platform=wayland";
+      icon = "spotify";
+      terminal = false;
+      categories = ["AudioVideo" "Player" "Audio"];
+      noDisplay = true;
+    };
+  };
+
+  xdg.desktopEntries."mongodb-compass" = {
+    name = "MongoDB Compass";
+    genericName = "MongoDB GUI";
+    exec = "${pkgs.mongodb-compass}/bin/mongodb-compass --password-store=gnome-libsecret --ignore-additional-command-line-flags %U";
+    icon = "mongodb-compass";
+    categories = ["Development" "Database"];
+    terminal = false;
   };
 
   programs.tmux = {
@@ -224,6 +259,7 @@ in {
   home.sessionVariables = {
     NIXOS_OZONE_WL = "1";
     ELECTRON_OZONE_PLATFORM_HINT = "wayland";
+    npm_config_sharp_libvips_local = "1"; # sharp
   };
 
   programs.ghostty = {
