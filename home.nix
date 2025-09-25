@@ -173,6 +173,12 @@ in {
         plugin = rose-pine;
         extraConfig = ''
           set -g @rose_pine_variant 'main'
+
+          # Split pane vertically with |
+          bind | split-window -h
+
+          # Split pane horizontally with -
+          bind - split-window -v
         '';
       }
     ];
