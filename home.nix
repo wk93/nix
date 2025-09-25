@@ -26,6 +26,7 @@ in {
     spotify
     telegram-desktop
     gimp
+    filezilla
     unzip
     zip
     nodejs_22
