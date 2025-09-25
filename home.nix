@@ -277,8 +277,8 @@ in {
       font-family-bold = "TX-02 Bold SemiCondensed";
       font-family-italic = "TX-02 Condensed SemiOblique";
       font-family-bold-italic = "TX-02 Bold SemiCondensed Oblique";
-      font-size = 13;
-      adjust-cell-height = "10%";
+      font-size = 14;
+      adjust-cell-height = "15%";
     };
   };
 
