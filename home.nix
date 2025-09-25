@@ -9,6 +9,21 @@
   importGpgScript = ./scripts/import-gpg.sh;
   importSshScript = ./scripts/import-ssh.sh;
   gpgFingerprint = "984BED610B4D4D5554B00B5CE4ACD897C85DFDDE";
+  runtimeLibs = with pkgs; [
+    stdenv.cc.cc.lib # zawiera libstdc++.so.6
+    zlib
+    glib
+    libuuid
+  ];
+  bunWrapped = pkgs.symlinkJoin {
+    name = "bun-wrapped";
+    paths = [pkgs.bun];
+    buildInputs = [pkgs.makeWrapper];
+    postBuild = ''
+      wrapProgram $out/bin/bun \
+        --set LD_LIBRARY_PATH ${lib.makeLibraryPath runtimeLibs}
+    '';
+  };
 in {
   imports = [
     ./fonts.nix
@@ -30,7 +45,7 @@ in {
     unzip
     zip
     nodejs_22
-    bun
+    bunWrapped
     grim
     gimp
     gcc.cc.lib
