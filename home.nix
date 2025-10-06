@@ -69,6 +69,8 @@ in {
 
     postman
     libreoffice
+
+    mailspring
   ];
 
   home.file.".bin/import-gpg-from-1password.sh" = {
@@ -133,17 +135,26 @@ in {
       icon = "spotify";
       terminal = false;
       categories = ["AudioVideo" "Player" "Audio"];
-      noDisplay = true;
     };
   };
 
   xdg.desktopEntries."mongodb-compass" = {
     name = "MongoDB Compass";
     genericName = "MongoDB GUI";
-    exec = "${pkgs.mongodb-compass}/bin/mongodb-compass --password-store=gnome-libsecret --ignore-additional-command-line-flags %U";
+    exec = "${pkgs.mongodb-compass}/bin/mongodb-compass --password-store=gnome-libsecret --ignore-additional-command-line-flags --enable-features=UseOzonePlatform --ozone-platform=wayland %U";
     icon = "mongodb-compass";
     categories = ["Development" "Database"];
     terminal = false;
+  };
+
+  xdg.desktopEntries = {
+    mailspring = {
+      name = "Mailspring";
+      genericName = "Poczta z flagą";
+      exec = ''mailspring --password-store="gnome-libsecret" --enable-features=UseOzonePlatform --ozone-platform=wayland %U'';
+      icon = "mailspring";
+      terminal = false;
+    };
   };
 
   programs.tmux = {
