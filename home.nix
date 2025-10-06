@@ -238,17 +238,22 @@ in {
   programs.ssh = {
     enable = true;
 
-    addKeysToAgent = "yes";
-    hashKnownHosts = true;
-    compression = true;
-    serverAliveInterval = 60;
+    enableDefaultConfig = false;
 
     matchBlocks = {
+      "*" = {
+        addKeysToAgent = "yes";
+        hashKnownHosts = true;
+        compression = true;
+        serverAliveInterval = 60;
+      };
+
       "github.com" = {
         user = "git";
         identityFile = "~/.ssh/keys/git_auth";
         identitiesOnly = true;
       };
+
       "89.168.111.137" = {
         user = "wojtek";
         identityFile = "~/.ssh/keys/oracle";
@@ -550,7 +555,7 @@ in {
 
   programs.rofi = {
     enable = true;
-    package = pkgs.rofi-wayland; # ważne na Waylandzie
+    package = pkgs.rofi; #
     theme = "gruvbox"; # lub ścieżka do .rasi
     extraConfig = {
       modi = "drun,run,window,ssh";
