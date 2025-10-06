@@ -288,7 +288,7 @@ in {
     enable = true;
     installVimSyntax = true;
     settings = {
-      theme = "rose-pine";
+      theme = "Rose Pine";
       font-family = "TX-02 SemiCondensed";
       font-family-bold = "TX-02 Bold SemiCondensed";
       font-family-italic = "TX-02 Condensed SemiOblique";
