@@ -67,6 +67,8 @@ in {
     pixman
     # stop for node canvas
 
+    vlc
+
     postman
     libreoffice
 
