@@ -29,6 +29,7 @@ in {
     ./hosts/t480/variables.nix
     ./fonts.nix
     ./modules/flutter.nix
+    ./programs/git
   ];
   home.username = "wojtek";
   home.homeDirectory = "/home/wojtek";
@@ -215,27 +216,6 @@ in {
   };
 
   programs.lazygit.enable = true;
-
-  programs.git = {
-    enable = true;
-    userName = "Wojciech Kania";
-    userEmail = "wojtek@kania.sh";
-
-    signing = {
-      key = "~/.ssh/keys/git_sign.pub";
-      signByDefault = true;
-    };
-
-    extraConfig = {
-      gpg.format = "ssh";
-      commit.gpgSign = true;
-      user.signingKey = "~/.ssh/keys/git_sign.pub";
-
-      init.defaultBranch = "master";
-      pull.rebase = true;
-      push.autoSetupRemote = true;
-    };
-  };
 
   services.ssh-agent.enable = true;
   programs.ssh = {
