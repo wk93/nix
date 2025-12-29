@@ -26,6 +26,7 @@
   };
 in {
   imports = [
+    ./hosts/t480/variables.nix
     ./fonts.nix
     ./modules/flutter.nix
   ];
