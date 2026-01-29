@@ -6,27 +6,24 @@
 }: {
   services.xserver.videoDrivers = ["nvidia"];
 
-  hardware.nvidia = {
-    modesetting.enable = true;
-    powerManagement.enable = false;
-    nvidiaSettings = true;
-    open = false;
-  };
-
-  hardware.nvidia.prime = {
-    intelBusId = "PCI:0:2:0";
-    nvidiaBusId = "PCI:1:0:0";
-  };
-
   hardware.graphics.enable = true;
 
-  environment.systemPackages = with pkgs; [
-    glxinfo
-    brightnessctl
-  ];
+  hardware.nvidia = {
+    modesetting.enable = true;
 
-  environment.sessionVariables = {
-    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
-    WLR_RENDERER = "gles2";
+    open = false;
+
+    nvidiaSettings = true;
+
+    powerManagement.enable = true;
+    powerManagement.finegrained = true;
+
+    prime = {
+      offload.enable = true;
+      offload.enableOffloadCmd = true;
+
+      intelBusId = "PCI:0:2:0";
+      nvidiaBusId = "PCI:1:0:0";
+    };
   };
 }

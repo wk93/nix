@@ -28,10 +28,10 @@
     neovim
     wget
     git
+    android-tools
   ];
 
   # Android Debug Bridge
-  programs.adb.enable = true;
   users.users.wojtek.extraGroups = ["adbusers"];
 
   # Some programs need SUID wrappers, can be configured further or are

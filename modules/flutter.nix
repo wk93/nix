@@ -37,7 +37,7 @@ in {
     pkgs.unzip
     pkgs.google-chrome
     pkgs.addlicense
-    pkgs.nodePackages.firebase-tools
+    #pkgs.firebase-tools
     pkgs.flutter
     pkgs.jdk17
   ];

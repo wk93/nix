@@ -75,6 +75,11 @@ in {
     libreoffice
 
     mailspring
+
+    wrangler
+
+    pciutils
+    usbutils
   ];
 
   home.file.".bin/import-gpg-from-1password.sh" = {
