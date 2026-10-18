@@ -210,11 +210,14 @@ in {
     Unit = {
       Description = "Start tmux server on login";
       After = ["graphical-session.target"];
+      # Don't kill running tmux sessions on home-manager switch
+      X-SwitchMethod = "keep-old";
     };
 
     Service = {
+      Type = "forking";
+      ExecCondition = "${pkgs.bash}/bin/sh -c '! ${pkgs.tmux}/bin/tmux has-session -t default 2>/dev/null'";
       ExecStart = "${pkgs.tmux}/bin/tmux new-session -d -s default";
-      Restart = "on-failure";
     };
 
     Install = {
@@ -490,7 +493,7 @@ in {
       };
       startup = [
         {
-          command = "ghostty -e tmux attach-session -t default || tmux new-session -s default";
+          command = "ghostty -e tmux new-session -A -s default";
           always = true;
         }
         {
