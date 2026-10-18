@@ -579,7 +579,7 @@ in {
 
   programs.rofi = {
     enable = true;
-    package = pkgs.rofi; #
+    package = pkgs.rofi;
     settings = {
       modi = "drun,run,window,ssh";
       show-icons = true;
