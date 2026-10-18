@@ -31,6 +31,7 @@ in {
     ./modules/flutter.nix
     ./programs/git
     ./programs/waybar
+    ./programs/wallpaper
   ];
   home.username = "wojtek";
   home.homeDirectory = "/home/wojtek";
@@ -449,10 +450,10 @@ in {
           user_pref("browser.translations.enable", false);
           user_pref("browser.translations.panelShown", true);
           user_pref("browser.translations.neverTranslateLanguages", "pl");
-        '';
 
           user_pref("media.ffmpeg.vaapi.enabled", true);
           user_pref("media.av1.enabled", false);
+        '';
       };
     };
   };
@@ -540,7 +541,6 @@ in {
     };
   };
 
-  programs.swaylock = {
   home.pointerCursor = {
     enable = true;
     package = pkgs.adwaita-icon-theme;
@@ -550,6 +550,7 @@ in {
     sway.enable = true;
   };
 
+  programs.swaylock = {
     enable = true;
     settings = {
       color = "191724";
@@ -579,10 +580,121 @@ in {
   programs.rofi = {
     enable = true;
     package = pkgs.rofi; #
-    theme = "gruvbox"; # lub ścieżka do .rasi
     settings = {
       modi = "drun,run,window,ssh";
       show-icons = true;
+      icon-theme = "Adwaita";
+      display-drun = "󰍉";
+      display-run = "󰆍";
+      display-window = "󰖲";
+      display-ssh = "󰒋";
+      drun-display-format = "{name}";
+    };
+    theme = let
+      inherit (config.lib.formats.rasi) mkLiteral;
+    in {
+      "*" = {
+        base = mkLiteral "#191724";
+        surface = mkLiteral "#1f1d2e";
+        overlay = mkLiteral "#26233a";
+        muted = mkLiteral "#6e6a86";
+        subtle = mkLiteral "#908caa";
+        text = mkLiteral "#e0def4";
+        love = mkLiteral "#eb6f92";
+        gold = mkLiteral "#f6c177";
+        rose = mkLiteral "#ebbcba";
+        foam = mkLiteral "#9ccfd8";
+        iris = mkLiteral "#c4a7e7";
+        hlmed = mkLiteral "#403d52";
+
+        font = "TX-02 SemiCondensed 13";
+        background-color = mkLiteral "transparent";
+        text-color = mkLiteral "@text";
+        margin = 0;
+        padding = 0;
+        spacing = 0;
+      };
+
+      window = {
+        width = mkLiteral "600px";
+        location = mkLiteral "center";
+        background-color = mkLiteral "@base";
+        border = mkLiteral "1px";
+        border-color = mkLiteral "@hlmed";
+        border-radius = mkLiteral "10px";
+        padding = mkLiteral "14px";
+      };
+
+      mainbox = {
+        spacing = mkLiteral "10px";
+        children = map mkLiteral ["inputbar" "message" "listview"];
+      };
+
+      inputbar = {
+        padding = mkLiteral "8px 12px";
+        spacing = mkLiteral "10px";
+        background-color = mkLiteral "@surface";
+        border-radius = mkLiteral "6px";
+        children = map mkLiteral ["prompt" "entry"];
+      };
+
+      prompt.text-color = mkLiteral "@iris";
+
+      entry = {
+        placeholder = "Szukaj…";
+        placeholder-color = mkLiteral "@muted";
+        cursor = mkLiteral "text";
+      };
+
+      message = {
+        padding = mkLiteral "8px 12px";
+        background-color = mkLiteral "@surface";
+        border-radius = mkLiteral "6px";
+      };
+
+      textbox.text-color = mkLiteral "@subtle";
+
+      listview = {
+        lines = 8;
+        columns = 1;
+        fixed-height = false;
+        scrollbar = false;
+        spacing = mkLiteral "2px";
+      };
+
+      element = {
+        padding = mkLiteral "6px 10px";
+        spacing = mkLiteral "10px";
+        border-radius = mkLiteral "6px";
+      };
+
+      "element normal.normal".text-color = mkLiteral "@text";
+      "element alternate.normal".text-color = mkLiteral "@text";
+      "element normal.active".text-color = mkLiteral "@foam";
+      "element alternate.active".text-color = mkLiteral "@foam";
+      "element normal.urgent".text-color = mkLiteral "@love";
+      "element alternate.urgent".text-color = mkLiteral "@love";
+
+      "element selected.normal" = {
+        background-color = mkLiteral "@overlay";
+        text-color = mkLiteral "@rose";
+      };
+      "element selected.active" = {
+        background-color = mkLiteral "@overlay";
+        text-color = mkLiteral "@foam";
+      };
+      "element selected.urgent" = {
+        background-color = mkLiteral "@love";
+        text-color = mkLiteral "@base";
+      };
+
+      element-icon.size = mkLiteral "20px";
+
+      element-text = {
+        text-color = mkLiteral "inherit";
+        vertical-align = mkLiteral "0.5";
+        highlight = mkLiteral "bold #f6c177";
+      };
     };
   };
 
