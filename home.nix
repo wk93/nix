@@ -386,21 +386,9 @@ in {
       };
 
       SearchEngines = {
-        Add = [
-          {
-            Name = "Mullvad Leta";
-            URLTemplate = "https://leta.mullvad.net/search?q={searchTerms}&engine=google";
-            Method = "GET";
-            Alias = "ml";
-            IconURL = "https://leta.mullvad.net/favicon.ico";
-            SuggestURLTemplate = "https://leta.mullvad.net/suggest?q={searchTerms}";
-            Hidden = false;
-          }
-        ];
-        Default = "Mullvad Leta";
+        Default = "DuckDuckGo";
         Remove = [
           "Bing"
-          "DuckDuckGo"
           "eBay"
           "Wikipedia (en)"
           "Google"
