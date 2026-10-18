@@ -17,6 +17,7 @@
     ./locale.nix
     ./shell.nix
     ./greetd.nix
+    ./desktop.nix
     ./user.nix
   ];
 

@@ -49,6 +49,8 @@ in {
     nodejs_22
     bunWrapped
     grim
+    slurp
+    brightnessctl
     gimp
     gcc.cc.lib
     mongodb-compass
@@ -530,6 +532,7 @@ in {
           "${modifier}+P" = "exec 1password";
           "${modifier}+Q" = "kill";
           "${modifier}+Space" = "exec rofi -show drun";
+          "${modifier}+Escape" = "exec swaylock -f";
 
           # Screenshots
           "${modifier}+Shift+P" = ''exec grim ~/Pictures/screenshot-$(date +%Y%m%d-%H%M%S).png'';
@@ -543,6 +546,33 @@ in {
           "XF86MonBrightnessDown" = "exec brightnessctl -q set 10%-";
           "XF86MonBrightnessUp" = "exec brightnessctl -q set +10%";
         };
+    };
+  };
+
+  programs.swaylock = {
+    enable = true;
+    settings = {
+      color = "191724";
+      show-failed-attempts = true;
+    };
+  };
+
+  services.swayidle = {
+    enable = true;
+    timeouts = [
+      {
+        timeout = 300;
+        command = "${pkgs.swaylock}/bin/swaylock -f";
+      }
+      {
+        timeout = 600;
+        command = ''${pkgs.sway}/bin/swaymsg "output * power off"'';
+        resumeCommand = ''${pkgs.sway}/bin/swaymsg "output * power on"'';
+      }
+    ];
+    events = {
+      before-sleep = "${pkgs.swaylock}/bin/swaylock -f";
+      lock = "${pkgs.swaylock}/bin/swaylock -f";
     };
   };
 
