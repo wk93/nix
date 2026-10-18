@@ -3,6 +3,9 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # Late nvidia messages draw over tuigreet
+  boot.consoleLogLevel = 3;
+
   # Force load videocard driver for tty
   boot.initrd.kernelModules = ["i915"];
 
