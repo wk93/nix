@@ -235,24 +235,24 @@ in {
 
     enableDefaultConfig = false;
 
-    matchBlocks = {
-      "*" = {
-        addKeysToAgent = "yes";
-        hashKnownHosts = true;
-        compression = true;
-        serverAliveInterval = 60;
+    settings = {
+      "*" = lib.hm.dag.entryAfter ["github.com" "89.168.111.137"] {
+        AddKeysToAgent = true;
+        HashKnownHosts = true;
+        Compression = true;
+        ServerAliveInterval = 60;
       };
 
       "github.com" = {
-        user = "git";
-        identityFile = "~/.ssh/keys/git_auth";
-        identitiesOnly = true;
+        User = "git";
+        IdentityFile = "~/.ssh/keys/git_auth";
+        IdentitiesOnly = true;
       };
 
       "89.168.111.137" = {
-        user = "wojtek";
-        identityFile = "~/.ssh/keys/oracle";
-        identitiesOnly = true;
+        User = "wojtek";
+        IdentityFile = "~/.ssh/keys/oracle";
+        IdentitiesOnly = true;
       };
     };
   };
@@ -345,6 +345,7 @@ in {
 
   programs.firefox = {
     enable = true;
+    configPath = ".mozilla/firefox";
     policies = {
       BlockAboutConfig = true;
       DisableTelemetry = true;
@@ -580,7 +581,7 @@ in {
     enable = true;
     package = pkgs.rofi; #
     theme = "gruvbox"; # lub ścieżka do .rasi
-    extraConfig = {
+    settings = {
       modi = "drun,run,window,ssh";
       show-icons = true;
     };
