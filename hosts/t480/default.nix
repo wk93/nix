@@ -37,6 +37,10 @@
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
+    (writeShellScriptBin "rebuild" ''
+      [ "$EUID" -eq 0 ] || exec sudo "$0" "$@"
+      exec nixos-rebuild "''${1:-switch}" --flake /home/wojtek/nixos-config#t480 "''${@:2}"
+    '')
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = false;
