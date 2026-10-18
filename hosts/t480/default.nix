@@ -14,6 +14,7 @@
     ./network.nix
     ./graphics.nix
     ./sound.nix
+    ./bluetooth.nix
     ./locale.nix
     ./shell.nix
     ./greetd.nix

@@ -7,4 +7,6 @@
   };
 
   security.pam.services.swaylock = {};
+
+  programs.dconf.enable = true;
 }
