@@ -15,6 +15,9 @@
 
     nvidiaSettings = true;
 
+    # MX150 (Pascal) is dropped from the 590+ drivers
+    package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
+
     powerManagement.enable = true;
     powerManagement.finegrained = true;
 
