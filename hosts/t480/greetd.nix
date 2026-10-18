@@ -8,18 +8,4 @@
       };
     };
   };
-
-  users.users.greeter = {
-    isSystemUser = true;
-    description = "Greetd login user";
-    home = "/var/lib/greetd";
-    createHome = true;
-    group = "greeter";
-  };
-
-  users.groups.greeter = {};
-
-  environment.systemPackages = with pkgs; [
-    tuigreet
-  ];
 }

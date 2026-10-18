@@ -51,7 +51,6 @@ in {
     grim
     slurp
     brightnessctl
-    gimp
     gcc.cc.lib
     mongodb-compass
     cargo
@@ -60,7 +59,6 @@ in {
     openssl
     pkg-config
     gcc
-    rustc
     vips # for sharp
     # start for node canvas
     cairo
@@ -149,18 +147,16 @@ in {
       terminal = false;
       categories = ["AudioVideo" "Player" "Audio"];
     };
-  };
 
-  xdg.desktopEntries."mongodb-compass" = {
-    name = "MongoDB Compass";
-    genericName = "MongoDB GUI";
-    exec = "${pkgs.mongodb-compass}/bin/mongodb-compass --password-store=gnome-libsecret --ignore-additional-command-line-flags --enable-features=UseOzonePlatform --ozone-platform=wayland %U";
-    icon = "mongodb-compass";
-    categories = ["Development" "Database"];
-    terminal = false;
-  };
+    mongodb-compass = {
+      name = "MongoDB Compass";
+      genericName = "MongoDB GUI";
+      exec = "${pkgs.mongodb-compass}/bin/mongodb-compass --password-store=gnome-libsecret --ignore-additional-command-line-flags --enable-features=UseOzonePlatform --ozone-platform=wayland %U";
+      icon = "mongodb-compass";
+      categories = ["Development" "Database"];
+      terminal = false;
+    };
 
-  xdg.desktopEntries = {
     mailspring = {
       name = "Mailspring";
       genericName = "Poczta z flagą";
@@ -357,7 +353,6 @@ in {
       DisablePasswordReveal = true;
       DisableProfileImport = true;
       DisableSystemAddonUpdate = true;
-      DisableEncryptedClientHello = true;
       DisableFirefoxScreenshots = true;
       DisableMasterPasswordCreation = true;
       DisableAppUpdate = true;
@@ -485,11 +480,9 @@ in {
       startup = [
         {
           command = "ghostty -e tmux new-session -A -s default";
-          always = true;
         }
         {
           command = "firefox";
-          always = true;
         }
         {
           # swaymsg reload resets output scales set by kanshi
