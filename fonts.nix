@@ -25,8 +25,4 @@ in {
   home.packages = [tx02];
 
   fonts.fontconfig.enable = true;
-
-  home.sessionVariables = {
-    XDG_DATA_DIRS = "${config.home.profileDirectory}/share:${pkgs.fontconfig}/etc/fonts";
-  };
 }
