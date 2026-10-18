@@ -53,23 +53,11 @@ in {
     grim
     slurp
     brightnessctl
-    gcc.cc.lib
     mongodb-compass
     cargo
     rustc
     rustfmt
-    openssl
-    pkg-config
     gcc
-    vips # for sharp
-    # start for node canvas
-    cairo
-    pango
-    libpng
-    libjpeg_turbo
-    giflib
-    pixman
-    # stop for node canvas
 
     vlc
 
@@ -274,7 +262,6 @@ in {
   home.sessionVariables = {
     NIXOS_OZONE_WL = "1";
     ELECTRON_OZONE_PLATFORM_HINT = "wayland";
-    npm_config_sharp_libvips_local = "1"; # sharp
   };
 
   programs.ghostty = {
@@ -687,12 +674,6 @@ in {
         background-color = mkLiteral "@love";
         text-color = mkLiteral "@base";
       };
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 14d";
-  };
-
 
       element-icon.size = mkLiteral "20px";
 
@@ -705,6 +686,12 @@ in {
   };
 
   services.gnome-keyring.enable = true;
+
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 14d";
+  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

@@ -26,6 +26,21 @@
   in {
     formatter = pkgs.nixpkgs-fmt;
 
+    devShells.${system}.native = pkgs.mkShell {
+      packages = with pkgs; [
+        pkg-config
+        openssl
+        vips
+        cairo
+        pango
+        libpng
+        libjpeg_turbo
+        giflib
+        pixman
+      ];
+      npm_config_sharp_libvips_local = "1";
+    };
+
     nixosConfigurations.t480 = nixpkgs.lib.nixosSystem {
       inherit system;
       modules = [
