@@ -491,6 +491,11 @@ in {
           command = "firefox";
           always = true;
         }
+        {
+          # swaymsg reload resets output scales set by kanshi
+          command = "systemctl --user restart kanshi";
+          always = true;
+        }
       ];
       keybindings = let
         cfg = config.wayland.windowManager.sway.config;
