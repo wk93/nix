@@ -15,6 +15,7 @@
     ./graphics.nix
     ./sound.nix
     ./bluetooth.nix
+    ./maintenance.nix
     ./locale.nix
     ./shell.nix
     ./greetd.nix

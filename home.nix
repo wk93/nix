@@ -687,6 +687,12 @@ in {
         background-color = mkLiteral "@love";
         text-color = mkLiteral "@base";
       };
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 14d";
+  };
+
 
       element-icon.size = mkLiteral "20px";
 
