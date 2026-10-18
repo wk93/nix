@@ -450,6 +450,9 @@ in {
           user_pref("browser.translations.panelShown", true);
           user_pref("browser.translations.neverTranslateLanguages", "pl");
         '';
+
+          user_pref("media.ffmpeg.vaapi.enabled", true);
+          user_pref("media.av1.enabled", false);
       };
     };
   };
