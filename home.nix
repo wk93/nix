@@ -216,7 +216,7 @@ in {
     Service = {
       Type = "forking";
       ExecCondition = "${pkgs.bash}/bin/sh -c '! ${pkgs.tmux}/bin/tmux has-session -t default 2>/dev/null'";
-      ExecStart = "${pkgs.tmux}/bin/tmux new-session -d -s default";
+      ExecStart = "${pkgs.bash}/bin/sh -c '${pkgs.tmux}/bin/tmux new-session -d -s default || ${pkgs.tmux}/bin/tmux has-session -t default'";
     };
 
     Install = {
