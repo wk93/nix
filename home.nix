@@ -541,6 +541,15 @@ in {
   };
 
   programs.swaylock = {
+  home.pointerCursor = {
+    enable = true;
+    package = pkgs.adwaita-icon-theme;
+    name = "Adwaita";
+    size = 24;
+    gtk.enable = true;
+    sway.enable = true;
+  };
+
     enable = true;
     settings = {
       color = "191724";
