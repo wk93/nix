@@ -1,9 +1,12 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    disko.url = "github:nix-community/disko";
-    flake-utils.url = "github:numtide/flake-utils";
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     vim.url = "github:wk93/nvim";
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -11,9 +14,7 @@
   };
 
   outputs = {
-    self,
     nixpkgs,
-    flake-utils,
     disko,
     home-manager,
     ...
@@ -24,7 +25,7 @@
       config.allowUnfree = true;
     };
   in {
-    formatter = pkgs.nixpkgs-fmt;
+    formatter.${system} = pkgs.alejandra;
 
     devShells.${system}.native = pkgs.mkShell {
       packages = with pkgs; [
@@ -43,24 +44,30 @@
 
     nixosConfigurations.t480 = nixpkgs.lib.nixosSystem {
       inherit system;
+      specialArgs = {inherit inputs;};
       modules = [
-        {nixpkgs.config.allowUnfree = true;}
+        {
+          nixpkgs.config.allowUnfree = true;
+          nixpkgs.overlays = [
+            inputs.vim.overlays.default
+            (final: prev: {
+              neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${system}.default;
+            })
+          ];
+        }
         ./hosts/t480
         disko.nixosModules.disko
         home-manager.nixosModules.default
+        {
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            backupFileExtension = "hm-backup";
+            extraSpecialArgs = {inherit inputs system;};
+            users.wojtek = import ./home.nix;
+          };
+        }
       ];
-    };
-
-    homeConfigurations = {
-      "wojtek@t480" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        extraSpecialArgs = {
-          inherit inputs system;
-        };
-        modules = [
-          ./home.nix
-        ];
-      };
     };
   };
 }

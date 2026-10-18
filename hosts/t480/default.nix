@@ -5,7 +5,11 @@
   inputs,
   ...
 }: {
-  nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix.settings = {
+    experimental-features = ["nix-command" "flakes"];
+    extra-substituters = ["https://nix-community.cachix.org"];
+    extra-trusted-public-keys = ["nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="];
+  };
 
   imports = [
     ./hardware-configuration.nix
@@ -33,14 +37,14 @@
     git
     android-tools
     foot
-  ];
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
     (writeShellScriptBin "rebuild" ''
       [ "$EUID" -eq 0 ] || exec sudo "$0" "$@"
       exec nixos-rebuild "''${1:-switch}" --flake /home/wojtek/nixos-config#t480 "''${@:2}"
     '')
+  ];
+
+  # Some programs need SUID wrappers, can be configured further or are
+  # started in user sessions.
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = false;

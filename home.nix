@@ -39,7 +39,7 @@ in {
   home.packages = with pkgs; [
     wl-clipboard
     git-crypt
-    inputs.vim.packages.${system}.default
+    nvim-pkg
     _1password-cli
     _1password-gui-beta
     spotify
@@ -692,9 +692,6 @@ in {
     dates = "weekly";
     options = "--delete-older-than 14d";
   };
-
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
