@@ -30,6 +30,7 @@ in {
     ./fonts.nix
     ./modules/flutter.nix
     ./programs/git
+    ./programs/waybar
   ];
   home.username = "wojtek";
   home.homeDirectory = "/home/wojtek";
