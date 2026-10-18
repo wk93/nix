@@ -32,6 +32,7 @@ in {
     ./programs/git
     ./programs/waybar
     ./programs/wallpaper
+    ./programs/files
   ];
   home.username = "wojtek";
   home.homeDirectory = "/home/wojtek";
