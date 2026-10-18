@@ -29,6 +29,7 @@
     wget
     git
     android-tools
+    foot
   ];
 
   # Android Debug Bridge

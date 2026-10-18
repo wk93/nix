@@ -80,6 +80,8 @@ in {
 
     pciutils
     usbutils
+
+    claude-code
   ];
 
   home.file.".bin/import-gpg-from-1password.sh" = {
