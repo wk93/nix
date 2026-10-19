@@ -55,6 +55,13 @@
     enableSSHSupport = false;
   };
 
+  programs._1password.enable = true;
+  programs._1password-gui = {
+    enable = true;
+    package = pkgs._1password-gui-beta;
+    polkitPolicyOwners = ["wojtek"];
+  };
+
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.

@@ -41,8 +41,6 @@ in {
     wl-clipboard
     git-crypt
     nvim-pkg
-    _1password-cli
-    _1password-gui-beta
     spotify
     telegram-desktop
     gimp
