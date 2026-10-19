@@ -45,6 +45,7 @@ in {
     telegram-desktop
     gimp
     filezilla
+    mosh
     unzip
     zip
     nodejs_22
@@ -100,7 +101,8 @@ in {
         SSH_DIR="$HOME/.ssh/keys" \
         KEYS="op://Private/GitHub Sign key/private key?ssh-format=openssh:::git_sign
               op://Private/Github Auth key/private key?ssh-format=openssh:::git_auth
-              op://Private/Oracle key/private key?ssh-format=openssh:::oracle" \
+              op://Private/Oracle key/private key?ssh-format=openssh:::oracle
+              op://Private/Nautilus Macbook key/private key?ssh-format=openssh:::macbook" \
         bash ~/.bin/import-ssh-from-1password.sh
       '';
     };
@@ -221,7 +223,7 @@ in {
     enableDefaultConfig = false;
 
     settings = {
-      "*" = lib.hm.dag.entryAfter ["github.com" "89.168.111.137"] {
+      "*" = lib.hm.dag.entryAfter ["github.com" "89.168.111.137" "nautilus"] {
         AddKeysToAgent = true;
         HashKnownHosts = true;
         Compression = true;
@@ -237,6 +239,12 @@ in {
       "89.168.111.137" = {
         User = "wojtek";
         IdentityFile = "~/.ssh/keys/oracle";
+        IdentitiesOnly = true;
+      };
+
+      "nautilus" = {
+        User = "wojtek";
+        IdentityFile = "~/.ssh/keys/macbook";
         IdentitiesOnly = true;
       };
     };
