@@ -4,8 +4,6 @@
   lib,
   ...
 }: {
-  services.xserver.videoDrivers = ["nvidia"];
-
   hardware.graphics = {
     enable = true;
     extraPackages = [pkgs.intel-media-driver];
@@ -13,25 +11,35 @@
 
   environment.sessionVariables.LIBVA_DRIVER_NAME = "iHD";
 
-  hardware.nvidia = {
-    modesetting.enable = true;
+  boot.blacklistedKernelModules = ["nouveau"];
 
-    open = false;
+  # Default boot entry: dGPU powered down and removed from the PCI bus
+  services.udev.extraRules = lib.mkIf (config.specialisation != {}) ''
+    ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x03[0-9]*", ATTR{power/control}="auto", ATTR{remove}="1"
+  '';
 
-    nvidiaSettings = true;
+  specialisation.nvidia.configuration = {
+    system.nixos.tags = ["nvidia"];
 
-    # MX150 (Pascal) is dropped from the 590+ drivers
-    package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
+    services.xserver.videoDrivers = ["nvidia"];
 
-    powerManagement.enable = true;
-    powerManagement.finegrained = true;
+    hardware.nvidia = {
+      modesetting.enable = true;
+      open = false;
+      nvidiaSettings = true;
 
-    prime = {
-      offload.enable = true;
-      offload.enableOffloadCmd = true;
+      # MX150 (Pascal) is dropped from the 590+ drivers
+      package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
 
-      intelBusId = "PCI:0:2:0";
-      nvidiaBusId = "PCI:1:0:0";
+      powerManagement.enable = true;
+
+      prime = {
+        offload.enable = true;
+        offload.enableOffloadCmd = true;
+
+        intelBusId = "PCI:0:2:0";
+        nvidiaBusId = "PCI:1:0:0";
+      };
     };
   };
 }

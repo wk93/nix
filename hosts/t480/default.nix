@@ -39,7 +39,12 @@
     foot
     (writeShellScriptBin "rebuild" ''
       [ "$EUID" -eq 0 ] || exec sudo "$0" "$@"
-      exec nixos-rebuild "''${1:-switch}" --flake /home/wojtek/nixos-config#t480 "''${@:2}"
+      action=''${1:-switch}
+      spec=()
+      if [[ $action =~ ^(switch|test)$ && $(readlink /run/current-system) == *-nvidia-* ]]; then
+        spec=(--specialisation nvidia)
+      fi
+      exec nixos-rebuild "$action" --flake /home/wojtek/nixos-config#t480 "''${spec[@]}" "''${@:2}"
     '')
   ];
 
