@@ -53,6 +53,12 @@
             (final: prev: {
               neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${system}.default;
             })
+            # mosh 1.4.0 gubi SGR 2 (faint/dim) - np. wyszarzone podpowiedzi Claude Code wyglądają jak wpisany tekst.
+            (final: prev: {
+              mosh = prev.mosh.overrideAttrs (old: {
+                patches = (old.patches or []) ++ [./patches/mosh-faint.patch];
+              });
+            })
           ];
         }
         ./hosts/t480
