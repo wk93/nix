@@ -163,6 +163,10 @@ in {
     clock24 = true;
     mouse = false;
     terminal = "screen-256color";
+    # server starts from systemd before sway exports this; needed for wl-paste
+    extraConfig = ''
+      set -ga update-environment WAYLAND_DISPLAY
+    '';
     plugins = with pkgs.tmuxPlugins; [
       sensible
       {
