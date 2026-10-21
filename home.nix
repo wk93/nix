@@ -33,6 +33,7 @@ in {
     ./programs/waybar
     ./programs/wallpaper
     ./programs/files
+    ./programs/notifications
   ];
   home.username = "wojtek";
   home.homeDirectory = "/home/wojtek";
