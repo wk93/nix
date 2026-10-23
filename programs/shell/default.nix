@@ -81,6 +81,16 @@
     options = ["--cmd cd"];
   };
 
+  # loads `use flake` from .envrc on cd
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+    config.global = {
+      hide_env_diff = true;
+      warn_timeout = "1m";
+    };
+  };
+
   programs.atuin = {
     enable = true;
     enableZshIntegration = true;
