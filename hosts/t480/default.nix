@@ -36,14 +36,19 @@
     wget
     git
     android-tools
+    podman-compose
     foot
     (writeShellScriptBin "rebuild" ''
-      [ "$EUID" -eq 0 ] || exec sudo "$0" "$@"
       action=''${1:-switch}
       spec=()
       if [[ $action =~ ^(switch|test)$ && $(readlink /run/current-system) == *-nvidia-* ]]; then
         spec=(--specialisation nvidia)
       fi
+      # nh shows a package diff and elevates by itself
+      if [[ $action =~ ^(switch|boot|test|build)$ ]]; then
+        exec nh os "$action" /home/wojtek/nixos-config -H t480 "''${spec[@]}" "''${@:2}"
+      fi
+      [ "$EUID" -eq 0 ] || exec sudo "$0" "$@"
       exec nixos-rebuild "$action" --flake /home/wojtek/nixos-config#t480 "''${spec[@]}" "''${@:2}"
     '')
   ];
@@ -53,6 +58,20 @@
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = false;
+  };
+
+  # run prebuilt binaries (npm, LSPs, vendored toolchains)
+  programs.nix-ld.enable = true;
+
+  programs.nh.enable = true;
+
+  # `, cmd` runs cmd without installing; prebuilt index for command-not-found
+  programs.nix-index-database.comma.enable = true;
+
+  virtualisation.podman = {
+    enable = true;
+    dockerCompat = true;
+    defaultNetwork.settings.dns_enabled = true;
   };
 
   programs._1password.enable = true;

@@ -11,6 +11,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -63,6 +67,7 @@
         }
         ./hosts/t480
         disko.nixosModules.disko
+        inputs.nix-index-database.nixosModules.nix-index
         home-manager.nixosModules.default
         {
           home-manager = {
