@@ -34,6 +34,7 @@ in {
     ./programs/wallpaper
     ./programs/files
     ./programs/notifications
+    ./programs/shell
   ];
   home.username = "wojtek";
   home.homeDirectory = "/home/wojtek";
