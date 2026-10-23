@@ -164,10 +164,16 @@ in {
     prefix = "C-a";
     clock24 = true;
     mouse = false;
-    terminal = "screen-256color";
+    baseIndex = 1;
+    escapeTime = 0;
+    terminal = "tmux-256color";
     # server starts from systemd before sway exports this; needed for wl-paste
     extraConfig = ''
       set -ga update-environment WAYLAND_DISPLAY
+      set -ga terminal-features ",xterm-ghostty:RGB,xterm-256color:RGB"
+      set -g renumber-windows on
+
+      bind c new-window -c "#{pane_current_path}"
     '';
     plugins = with pkgs.tmuxPlugins; [
       sensible
@@ -192,10 +198,10 @@ in {
           set -g @rose_pine_variant 'main'
 
           # Split pane vertically with |
-          bind | split-window -h
+          bind | split-window -h -c "#{pane_current_path}"
 
           # Split pane horizontally with -
-          bind - split-window -v
+          bind - split-window -v -c "#{pane_current_path}"
         '';
       }
     ];
@@ -219,6 +225,10 @@ in {
       WantedBy = ["default.target"];
     };
   };
+
+  # prefix+s: sessions and zoxide dirs
+  programs.sesh.enable = true;
+  programs.fzf.tmux.enableShellIntegration = true;
 
   programs.lazygit.enable = true;
 
