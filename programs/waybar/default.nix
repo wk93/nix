@@ -130,7 +130,7 @@ in {
         user = true;
         format = "󰀦 {nr_failed}";
         tooltip-format = "system {nr_failed_system}  user {nr_failed_user}";
-        on-click = "ghostty -e sh -c 'systemctl --failed; systemctl --user --failed; read'";
+        on-click = "ghostty --class=floatterm -e sh -c 'systemctl --failed; systemctl --user --failed; read'";
       };
 
       "group/sys" = {
@@ -189,7 +189,7 @@ in {
         tooltip-format-ethernet = "{ifname}  {ipaddr}/{cidr} via {gwaddr}\n↓ {bandwidthDownBytes}  ↑ {bandwidthUpBytes}";
         tooltip-format-disconnected = "disconnected";
         on-click = "networkmanager_dmenu";
-        on-click-right = "ghostty -e nmtui";
+        on-click-right = "ghostty --class=floatterm -e nmtui";
       };
 
       bluetooth = {

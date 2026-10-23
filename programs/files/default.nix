@@ -1,4 +1,8 @@
-{pkgs, ...}: let
+{
+  pkgs,
+  lib,
+  ...
+}: let
   gtkCss = ''
     @define-color accent_color #ebbcba;
     @define-color accent_bg_color #ebbcba;
@@ -90,8 +94,8 @@ in {
     set -ga update-environment TERM_PROGRAM
   '';
 
-  wayland.windowManager.sway.config.keybindings = {
-    "Mod4+E" = "exec ghostty -e yazi";
-    "Mod4+T" = "exec thunar";
+  wayland.windowManager.sway.config.keybindings = lib.mkOptionDefault {
+    "Mod4+e" = "exec ghostty -e yazi";
+    "Mod4+t" = "exec thunar";
   };
 }

@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   home.packages = [pkgs.libnotify];
 
   services.mako = {
@@ -31,10 +35,10 @@
     };
   };
 
-  wayland.windowManager.sway.config.keybindings = {
-    "Mod4+N" = "exec makoctl dismiss";
-    "Mod4+Shift+N" = "exec makoctl dismiss --all";
-    "Mod4+Control+N" = "exec makoctl restore";
-    "Mod4+Alt+N" = "exec makoctl mode -t dnd";
+  wayland.windowManager.sway.config.keybindings = lib.mkOptionDefault {
+    "Mod4+n" = "exec makoctl dismiss";
+    "Mod4+Shift+n" = "exec makoctl dismiss --all";
+    "Mod4+Control+n" = "exec makoctl restore";
+    "Mod4+Alt+n" = "exec makoctl mode -t dnd";
   };
 }

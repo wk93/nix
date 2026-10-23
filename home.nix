@@ -74,6 +74,7 @@ in {
     usbutils
 
     claude-code
+    satty
   ];
 
   home.file.".bin/import-gpg-from-1password.sh" = {
@@ -120,12 +121,40 @@ in {
         "$directory"
         "$git_branch"
         "$git_status"
+        "$nix_shell"
+        "$direnv"
+        "$cmd_duration"
         "$character"
       ];
 
       character = {
         success_symbol = "[➜](bold green)";
         error_symbol = "[➜](bold red)";
+      };
+
+      nix_shell = {
+        format = "[$symbol$state]($style) ";
+        symbol = "❄ ";
+        impure_msg = "";
+        pure_msg = "pure";
+        style = "bold blue";
+      };
+
+      direnv = {
+        disabled = false;
+        format = "[$loaded$allowed]($style) ";
+        loaded_msg = "";
+        unloaded_msg = "";
+        allowed_msg = "";
+        not_allowed_msg = "direnv blocked";
+        denied_msg = "direnv denied";
+        style = "bold yellow";
+      };
+
+      cmd_duration = {
+        min_time = 3000;
+        format = "[$duration]($style) ";
+        style = "yellow";
       };
     };
   };
@@ -166,12 +195,16 @@ in {
     mouse = false;
     baseIndex = 1;
     escapeTime = 0;
+    # one socket for shells, sway startup and the systemd autostart
+    secureSocket = false;
     terminal = "tmux-256color";
     # server starts from systemd before sway exports this; needed for wl-paste
     extraConfig = ''
       set -ga update-environment WAYLAND_DISPLAY
       set -ga terminal-features ",xterm-ghostty:RGB,xterm-256color:RGB"
       set -g renumber-windows on
+      # apps (claude, nvim, herdr over mosh) copy via OSC 52
+      set -g set-clipboard on
 
       bind c new-window -c "#{pane_current_path}"
     '';
@@ -190,6 +223,14 @@ in {
         extraConfig = ''
           set -g @continuum-restore 'on'
           set -g @continuum-save-interval '1'  # w minutach
+        '';
+      }
+      {
+        # prefix+Tab: fuzzy pick paths/urls/hashes from the screen
+        plugin = extrakto;
+        extraConfig = ''
+          set -g @extrakto_clip_tool "wl-copy"
+          set -g @extrakto_popup_size "60%,50%"
         '';
       }
       {
@@ -473,9 +514,27 @@ in {
     xwayland = true;
     config = {
       modifier = "Mod4";
+      terminal = "ghostty";
+      menu = "rofi -show drun";
       window = {
         titlebar = false;
         border = 0;
+        commands = let
+          float = criteria: {
+            inherit criteria;
+            command = "floating enable, resize set 900 600, move position center";
+          };
+        in [
+          (float {app_id = "org.pulseaudio.pavucontrol";})
+          (float {app_id = ".blueman-manager-wrapped";})
+          (float {app_id = "floatterm";})
+          (float {window_role = "pop-up";})
+          (float {window_type = "dialog";})
+          {
+            criteria.app_id = "scratchterm";
+            command = "floating enable, resize set 80 ppt 70 ppt, move position center, move scratchpad, scratchpad show";
+          }
+        ];
       };
       input = {
         "*" = {
@@ -525,20 +584,26 @@ in {
           9
         );
       in
-        switchWorkspaces
+        # keep sway defaults (focus/move hjkl, fullscreen, floating, resize, reload)
+        lib.mkOptionDefault (switchWorkspaces
         // moveWorkspaces
         // {
           "${modifier}+Return" = "exec ghostty";
           "${modifier}+Shift+e" = "swaymsg exit";
-          "${modifier}+B" = "exec firefox";
-          "${modifier}+P" = "exec 1password";
-          "${modifier}+Q" = "kill";
-          "${modifier}+Space" = "exec rofi -show drun";
+          "${modifier}+b" = "exec firefox";
+          "${modifier}+p" = "exec 1password";
+          "${modifier}+q" = "kill";
+          "${modifier}+space" = "exec rofi -show drun";
           "${modifier}+Escape" = "exec swaylock -f";
 
           # Screenshots
-          "${modifier}+Shift+P" = ''exec grim ~/Pictures/screenshot-$(date +%Y%m%d-%H%M%S).png'';
-          "${modifier}+Shift+Control+P" = ''exec grim -g "$(slurp)" - | wl-copy'';
+          "${modifier}+Shift+p" = ''exec grim ~/Pictures/screenshot-$(date +%Y%m%d-%H%M%S).png'';
+          "${modifier}+Shift+Control+p" = ''exec grim -g "$(slurp)" - | wl-copy'';
+          # annotate region; ctrl+c copies, ctrl+s saves to ~/Pictures
+          "${modifier}+Control+p" = ''exec grim -g "$(slurp)" - | satty --filename - --early-exit --copy-command wl-copy --output-filename ~/Pictures/screenshot-%Y%m%d-%H%M%S.png'';
+
+          # drop-down terminal
+          "${modifier}+grave" = ''exec swaymsg '[app_id="scratchterm"] scratchpad show' || ghostty --class=scratchterm'';
 
           #T480 functional keys
           "XF86AudioMute" = "exec pactl set-sink-mute @DEFAULT_SINK@ toggle";
@@ -547,7 +612,7 @@ in {
           "XF86AudioMicMute" = "exec pactl set-source-mute @DEFAULT_SOURCE@ toggle";
           "XF86MonBrightnessDown" = "exec brightnessctl -q set 10%-";
           "XF86MonBrightnessUp" = "exec brightnessctl -q set +10%";
-        };
+        });
     };
   };
 
