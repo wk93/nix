@@ -202,6 +202,8 @@ in {
     extraConfig = ''
       set -ga update-environment WAYLAND_DISPLAY
       set -ga terminal-features ",xterm-ghostty:RGB,xterm-256color:RGB"
+      # pass OSC 8 links through so ctrl+click opens them in ghostty
+      set -ga terminal-features ",*:hyperlinks"
       set -g renumber-windows on
       # apps (claude, nvim, herdr over mosh) copy via OSC 52
       set -g set-clipboard on
@@ -326,6 +328,8 @@ in {
   home.sessionVariables = {
     NIXOS_OZONE_WL = "1";
     ELECTRON_OZONE_PLATFORM_HINT = "wayland";
+    # tmux hides ghostty, so CLIs (claude) skip OSC 8 links without this
+    FORCE_HYPERLINK = "1";
   };
 
   programs.ghostty = {
@@ -528,6 +532,15 @@ in {
           (float {app_id = "org.pulseaudio.pavucontrol";})
           (float {app_id = ".blueman-manager-wrapped";})
           (float {app_id = "floatterm";})
+          # no idle lock while watching fullscreen video
+          {
+            criteria.app_id = ".*";
+            command = "inhibit_idle fullscreen";
+          }
+          {
+            criteria.class = ".*";
+            command = "inhibit_idle fullscreen";
+          }
           (float {window_role = "pop-up";})
           (float {window_type = "dialog";})
           {
@@ -650,6 +663,38 @@ in {
       before-sleep = "${pkgs.swaylock}/bin/swaylock -f";
       lock = "${pkgs.swaylock}/bin/swaylock -f";
     };
+  };
+
+  # no idle lock while audio plays (e.g. youtube not in fullscreen)
+  systemd.user.services.sway-audio-idle-inhibit = {
+    Unit = {
+      PartOf = ["graphical-session.target"];
+      After = ["graphical-session.target"];
+    };
+    Service = {
+      ExecStart = "${pkgs.sway-audio-idle-inhibit}/bin/sway-audio-idle-inhibit";
+      Restart = "on-failure";
+    };
+    Install.WantedBy = ["sway-session.target"];
+  };
+
+  # firefox skips xdg-activation on new tabs, so sway only marks it urgent
+  systemd.user.services.firefox-urgent-focus = {
+    Unit = {
+      PartOf = ["graphical-session.target"];
+      After = ["graphical-session.target"];
+    };
+    Service = {
+      ExecStart = let
+        script = pkgs.writeShellScript "firefox-urgent-focus" ''
+          ${pkgs.sway}/bin/swaymsg -m -t subscribe '["window"]' \
+            | ${pkgs.jq}/bin/jq --unbuffered -r 'select(.change == "urgent" and .container.urgent and .container.app_id == "firefox") | .container.id' \
+            | while read -r id; do ${pkgs.sway}/bin/swaymsg "[con_id=$id] focus"; done
+        '';
+      in "${script}";
+      Restart = "always";
+    };
+    Install.WantedBy = ["sway-session.target"];
   };
 
   programs.rofi = {
